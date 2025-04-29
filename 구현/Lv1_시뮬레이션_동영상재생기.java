@@ -32,7 +32,7 @@ class Solution {
 
 		if (this.pos >= this.op_start && this.pos < this.op_end) this.pos = this.op_end;
 		for (String cmd : commands) {			
-			if (cmd.equals("next")) 		this.pos = (this.pos + 10 < this.video_len)? this.pos + 10 : this.video_len;
+			if (cmd.equals("next")) 	this.pos = (this.pos + 10 < this.video_len)? this.pos + 10 : this.video_len;
 			else if (cmd.equals("prev")) 	this.pos = (this.pos - 10 > 0)? this.pos - 10 : 0;
 			
 			if (this.pos >= this.op_start && this.pos < this.op_end) this.pos = this.op_end;
