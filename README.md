@@ -22,5 +22,7 @@
 - `[카테고리] 문제명 - 간단한 풀이 요약`
 - 예시: `[탐색] 게임맵 최단거리 - BFS`
 
+## 알고리즘찾기 귀찮을 경우?
 
+- https://github.com/asfdbw01/AlgorithmLibrary
 
