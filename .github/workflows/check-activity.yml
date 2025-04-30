@@ -2,7 +2,7 @@ name: Daily Commit Check
 
 on:
   schedule:
-    - cron: '0 9 * * *' # 한국시간 오후 6시
+    - cron: '0 14 * * *' # 한국시간 오후 11시
   workflow_dispatch:
 
 jobs:
