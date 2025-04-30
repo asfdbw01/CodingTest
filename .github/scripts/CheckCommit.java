@@ -84,7 +84,14 @@ public class CheckCommit {
         for (String user : missingUsers) {
             bodyBuilder.append("- ").append(user).append("\n");
         }
-        String json = String.format("{\"title\": \"%s\", \"body\": \"%s\"}", title, bodyBuilder.toString().replace("\"", "\\\""));
+        
+        String escapedBody = bodyBuilder.toString()
+            .replace("\\", "\\\\")
+            .replace("\"", "\\\"")
+            .replace("\n", "\\n");
+        
+        String json = String.format("{\"title\": \"%s\", \"body\": \"%s\"}", title, escapedBody);
+
 
         OutputStream os = issueConn.getOutputStream();
         os.write(json.getBytes("utf-8"));
