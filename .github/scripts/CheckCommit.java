@@ -6,8 +6,8 @@ import java.util.*;
 
 public class CheckCommit {
     public static void main(String[] args) throws Exception {
-        String owner = "asfdbw01"; // TODO: 본인 깃허브 ID
-        String repo = "CodingTest"; // TODO: 본인 레포지토리 이름
+        String owner = "asfdbw01"; // 깃허브 사용자 ID
+        String repo = "CodingTest"; // 리포지토리 이름
         String token = System.getenv("GITHUB_TOKEN");
 
         LocalDate today = LocalDate.now();
@@ -79,13 +79,30 @@ public class CheckCommit {
         issueConn.setDoOutput(true);
 
         String title = today + " 커밋 미참여자 알림";
-        String body = "다음 멤버는 오늘 커밋을 하지 않았습니다:\n\n" + String.join("\n", missingUsers);
-        String json = String.format("{\"title\": \"%s\", \"body\": \"%s\"}", title, body);
+        StringBuilder bodyBuilder = new StringBuilder();
+        bodyBuilder.append("다음 멤버는 오늘 커밋을 하지 않았습니다:\n\n");
+        for (String user : missingUsers) {
+            bodyBuilder.append("- ").append(user).append("\n");
+        }
+        String json = String.format("{\"title\": \"%s\", \"body\": \"%s\"}", title, bodyBuilder.toString().replace("\"", "\\\""));
 
         OutputStream os = issueConn.getOutputStream();
         os.write(json.getBytes("utf-8"));
         os.close();
 
-        System.out.println("[✔] 이슈가 생성되었습니다.");
+        int responseCode = issueConn.getResponseCode();
+        if (responseCode == 201) {
+            System.out.println("[✔] 이슈가 생성되었습니다.");
+        } else {
+            System.out.println("[✘] 이슈 생성 실패. 응답 코드: " + responseCode);
+
+            BufferedReader errorReader = new BufferedReader(new InputStreamReader(issueConn.getErrorStream()));
+            StringBuilder errorResponse = new StringBuilder();
+            while ((line = errorReader.readLine()) != null) {
+                errorResponse.append(line);
+            }
+            errorReader.close();
+            System.out.println("응답 내용: " + errorResponse);
+        }
     }
 }
