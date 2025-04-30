@@ -6,8 +6,8 @@ import java.util.*;
 
 public class CheckCommit {
     public static void main(String[] args) throws Exception {
-        String owner = "your-username"; // TODO: 본인 깃허브 ID
-        String repo = "programmers-study"; // TODO: 본인 레포지토리 이름
+        String owner = "asfdbw01"; // TODO: 본인 깃허브 ID
+        String repo = "CodingTest"; // TODO: 본인 레포지토리 이름
         String token = System.getenv("GITHUB_TOKEN");
 
         LocalDate today = LocalDate.now();
