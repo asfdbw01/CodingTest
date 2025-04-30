@@ -2,8 +2,11 @@ name: Daily Commit Check
 
 on:
   schedule:
-    - cron: '0 14 * * *' # 오후 11시 KST (UTC 기준 14시)
+    - cron: '0 14 * * *' # 한국시간 23시
   workflow_dispatch:
+
+permissions:
+  issues: write  # ✅ 이거 추가!
 
 jobs:
   check-commits:
@@ -17,7 +20,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '17'
-          distribution: 'temurin'   # ✅ 필수!
+          distribution: 'temurin'
 
       - name: Compile Java
         run: javac .github/scripts/CheckCommit.java
@@ -26,3 +29,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: java -cp .github/scripts CheckCommit
+
