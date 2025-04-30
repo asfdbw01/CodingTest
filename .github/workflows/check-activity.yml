@@ -1,0 +1,27 @@
+name: Daily Commit Check
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # 한국시간 오후 6시
+  workflow_dispatch:
+
+jobs:
+  check-commits:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      - name: Compile Java
+        run: javac .github/scripts/CheckCommit.java
+
+      - name: Run Commit Checker
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: java -cp .github/scripts CheckCommit
