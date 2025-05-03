@@ -3,6 +3,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
+import java.time.*; 
+import java.time.format.DateTimeFormatter;
+
 
 public class CheckCommit {
     public static void main(String[] args) throws Exception {
@@ -10,8 +13,12 @@ public class CheckCommit {
         String repo = "CodingTest"; // 리포지토리 이름
         String token = System.getenv("GITHUB_TOKEN");
 
-        LocalDate today = LocalDate.now();
-        String since = today + "T00:00:00Z";
+        // ✅ 한국 00시 기준으로 조회 (UTC 변환)
+        LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
+        ZonedDateTime koreaStart = today.atStartOfDay(ZoneId.of("Asia/Seoul"));
+        ZonedDateTime utcStart = koreaStart.withZoneSameInstant(ZoneId.of("UTC"));
+        String since = utcStart.format(DateTimeFormatter.ISO_INSTANT);
+
 
         // 1. 오늘 커밋한 사람 조회
         Set<String> todayCommitters = new HashSet<>();
