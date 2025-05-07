@@ -18,8 +18,6 @@
  */
 
 class Solution {
-
-
     public int[] solution(int[][] arr) {
         int n = arr.length;
         return compress(arr, 0, 0, n);
