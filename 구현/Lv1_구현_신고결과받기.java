@@ -18,8 +18,6 @@
  * 		- 메일 발송 수는 Map<String, Integer>로 기록
  */
 
-// 스스로에게 주는 제약조건
-// 		1. if문 최소화
 class Solution {
     public int[] solution(String[] id_list, String[] report, int k) {
         int[] answer = new int[id_list.length];
