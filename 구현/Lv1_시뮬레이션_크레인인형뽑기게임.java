@@ -22,11 +22,11 @@ class Solution {
 
 		// 각 열에서 가장 위에 있는 인형의 행 번호를 미리 구해놓음
 		int[] topRow = IntStream.range(0, m)
-								  .map(i -> IntStream.range(0, n)
-										  			 .filter(j -> board[j][i] != 0)
-										  			 .findFirst()
-										  			 .orElse(n))
-								  .toArray();
+					.map(i -> IntStream.range(0, n)
+							   .filter(j -> board[j][i] != 0)
+							   .findFirst()
+							   .orElse(n))
+					.toArray();
 		
 		Deque<Integer> stack = new ArrayDeque<>();  // 바구니 역할
 		int pop = 0;  // 터진 인형 수
