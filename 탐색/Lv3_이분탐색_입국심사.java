@@ -28,9 +28,7 @@ class Solution {
 			long mid = (left + right) / 2;
 			
 			// mid 시간 동안 처리 가능한 총 인원수 계산
-			long count = Arrays.stream(times)
-							           .mapToLong(i -> mid / i)
-							           .sum();
+			long count = Arrays.stream(times).mapToLong(i -> mid / i).sum();
 			
 			if (count < n) {
 				// 부족하므로 시간을 늘림
