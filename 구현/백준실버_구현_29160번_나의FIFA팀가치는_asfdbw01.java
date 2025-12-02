@@ -20,3 +20,55 @@ i번째 선수의 포지션 pi, 선수 가치 wi가 공백으로 구분되어 �
 입력으로 주어지는 수는 모두 정수이다.
 */
 
+import java.io.IOException;
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+    private static final int positionNumber = 11;
+    public static void main(String[] args) throws IOException {
+        // 코드 작성
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+
+        List<PriorityQueue<Integer>> position  = new ArrayList<>();
+        for(int i=0;i<positionNumber;i++)position.add(new PriorityQueue<>(Collections.reverseOrder()));
+        insertPosition(position, N, br);
+        for(int i=0;i<K;i++)reconstruction(position);
+        int ans = totalPlayerValue(position);
+        System.out.println(ans);
+    }
+
+    private static int totalPlayerValue( List<PriorityQueue<Integer>> position ){
+        int totalValue = 0;
+        for(int i=0;i<positionNumber;i++){
+            if(position.get(i).peek()==null)continue;
+            totalValue += position.get(i).peek();
+        }
+        return totalValue;
+    }
+
+    private static void reconstruction(List<PriorityQueue<Integer>> position){
+        for(int i=0;i<positionNumber;i++){
+            if(position.get(i).peek() == null)continue;//선수가 없는 경우
+            int value = position.get(i).poll();
+            if(value >=1)value--;
+            position.get(i).offer(value);
+        }
+    }
+
+
+    private static void insertPosition(List<PriorityQueue<Integer>> position,int N,BufferedReader br)throws IOException{
+        int read = 0;
+        while (read < N) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int posNum  = Integer.parseInt(st.nextToken())-1;
+            int value = Integer.parseInt(st.nextToken());
+            position.get(posNum).offer(value);
+            read++;
+        }
+    }
+}
